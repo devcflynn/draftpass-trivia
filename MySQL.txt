@@ -1,0 +1,173 @@
+-- Database Manager 4.2.5 dump
+
+SET NAMES utf8;
+SET time_zone = '+00:00';
+SET foreign_key_checks = 0;
+SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
+
+DROP TABLE IF EXISTS `answerkey`;
+CREATE TABLE `answerkey` (
+  `round` varchar(15) NOT NULL,
+  `question` int(2) NOT NULL DEFAULT '0',
+  `answer` varchar(50) NOT NULL,
+  `shortcut` int(1) NOT NULL DEFAULT '0',
+  KEY `round` (`round`(1))
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+DROP TABLE IF EXISTS `answers_r1`;
+CREATE TABLE `answers_r1` (
+  `idnum` int(11) NOT NULL AUTO_INCREMENT,
+  `teamid` int(4) NOT NULL,
+  `round` varchar(15) NOT NULL,
+  `question` int(2) NOT NULL,
+  `answer` varchar(64) NOT NULL,
+  `wager` int(2) NOT NULL DEFAULT '0',
+  `checked` int(1) NOT NULL DEFAULT '0',
+  `correct` int(1) NOT NULL,
+  PRIMARY KEY (`idnum`),
+  UNIQUE KEY `answer` (`answer`),
+  KEY `teamname` (`teamid`),
+  KEY `round` (`round`(1)),
+  KEY `wager` (`wager`),
+  KEY `question` (`question`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+DROP TABLE IF EXISTS `answers_r2`;
+CREATE TABLE `answers_r2` (
+  `idnum` int(11) NOT NULL AUTO_INCREMENT,
+  `teamid` int(4) NOT NULL,
+  `round` varchar(15) NOT NULL,
+  `question` int(2) NOT NULL,
+  `answer` varchar(64) NOT NULL,
+  `wager` int(2) NOT NULL DEFAULT '0',
+  `checked` int(1) NOT NULL DEFAULT '0',
+  `correct` int(1) NOT NULL,
+  PRIMARY KEY (`idnum`),
+  UNIQUE KEY `answer` (`answer`),
+  KEY `teamname` (`teamid`),
+  KEY `round` (`round`(1)),
+  KEY `wager` (`wager`),
+  KEY `question` (`question`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+DROP TABLE IF EXISTS `answers_r3`;
+CREATE TABLE `answers_r3` (
+  `idnum` int(11) NOT NULL AUTO_INCREMENT,
+  `teamid` int(4) NOT NULL,
+  `round` varchar(15) NOT NULL,
+  `question` int(2) NOT NULL,
+  `answer` varchar(64) NOT NULL,
+  `wager` int(2) NOT NULL DEFAULT '0',
+  `checked` int(1) NOT NULL DEFAULT '0',
+  `correct` int(1) NOT NULL,
+  PRIMARY KEY (`idnum`),
+  UNIQUE KEY `answer` (`answer`),
+  KEY `teamname` (`teamid`),
+  KEY `round` (`round`(1)),
+  KEY `wager` (`wager`),
+  KEY `question` (`question`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+DROP TABLE IF EXISTS `answers_r4`;
+CREATE TABLE `answers_r4` (
+  `idnum` int(11) NOT NULL AUTO_INCREMENT,
+  `teamid` int(4) NOT NULL,
+  `round` varchar(15) NOT NULL,
+  `question` int(2) NOT NULL,
+  `answer` varchar(64) NOT NULL,
+  `wager` int(2) NOT NULL DEFAULT '0',
+  `checked` int(1) NOT NULL DEFAULT '0',
+  `correct` int(1) NOT NULL,
+  PRIMARY KEY (`idnum`),
+  UNIQUE KEY `answer` (`answer`),
+  KEY `teamname` (`teamid`),
+  KEY `round` (`round`(1)),
+  KEY `wager` (`wager`),
+  KEY `question` (`question`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+DROP TABLE IF EXISTS `answers_r5`;
+CREATE TABLE `answers_r5` (
+  `idnum` int(11) NOT NULL AUTO_INCREMENT,
+  `teamid` int(4) NOT NULL,
+  `round` varchar(15) NOT NULL,
+  `question` int(2) NOT NULL,
+  `answer` varchar(64) NOT NULL,
+  `wager` int(2) NOT NULL DEFAULT '0',
+  `checked` int(1) NOT NULL DEFAULT '0',
+  `correct` int(1) NOT NULL,
+  PRIMARY KEY (`idnum`),
+  UNIQUE KEY `answer` (`answer`),
+  KEY `teamname` (`teamid`),
+  KEY `round` (`round`(1)),
+  KEY `wager` (`wager`),
+  KEY `question` (`question`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+DROP TABLE IF EXISTS `answers_r6`;
+CREATE TABLE `answers_r6` (
+  `idnum` int(11) NOT NULL AUTO_INCREMENT,
+  `teamid` int(4) NOT NULL,
+  `round` varchar(15) NOT NULL,
+  `question` int(2) NOT NULL,
+  `answer` varchar(64) NOT NULL,
+  `wager` int(2) NOT NULL DEFAULT '0',
+  `checked` int(1) NOT NULL DEFAULT '0',
+  `correct` int(1) NOT NULL,
+  PRIMARY KEY (`idnum`),
+  UNIQUE KEY `answer` (`answer`),
+  KEY `teamname` (`teamid`),
+  KEY `round` (`round`(1)),
+  KEY `wager` (`wager`),
+  KEY `question` (`question`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+DROP TABLE IF EXISTS `email`;
+CREATE TABLE `email` (
+  `email` varchar(50) NOT NULL,
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+DROP TABLE IF EXISTS `hosts`;
+CREATE TABLE `hosts` (
+  `id` int(1) NOT NULL DEFAULT '0',
+  `host` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+DROP TABLE IF EXISTS `points`;
+CREATE TABLE `points` (
+  `idnum` int(11) NOT NULL AUTO_INCREMENT,
+  `teamname` varchar(25) NOT NULL,
+  `firsthalf` int(2) NOT NULL DEFAULT '0',
+  `picture` int(2) NOT NULL DEFAULT '0',
+  `secondhalf` int(2) NOT NULL DEFAULT '0',
+  `id` int(2) NOT NULL DEFAULT '0',
+  `currentevents` int(2) NOT NULL DEFAULT '0',
+  `wager` int(2) NOT NULL DEFAULT '0',
+  `total` int(3) NOT NULL DEFAULT '0',
+  `dispute` int(2) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`idnum`),
+  KEY `teamname` (`teamname`(15))
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+DROP TABLE IF EXISTS `round`;
+CREATE TABLE `round` (
+  `firsthalf` int(1) NOT NULL DEFAULT '0',
+  `picture` int(1) NOT NULL DEFAULT '0',
+  `secondhalf` int(1) NOT NULL DEFAULT '0',
+  `id` int(1) NOT NULL DEFAULT '0',
+  `currentevents` int(1) NOT NULL DEFAULT '0',
+  `wager` int(1) NOT NULL DEFAULT '0',
+  `scores` int(1) NOT NULL DEFAULT '0',
+  `current` int(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;

@@ -1,0 +1,186 @@
+body {
+   padding-top: 1px;
+   margin: 2px 2px 2px 2px;
+   align: center;
+   text-align: center;
+}
+
+* {
+   font-family: Helvetica;
+   font-size: 20px;
+   font-weight: 400;
+   color: #6a6566;
+}
+
+div {
+   margin-top: 0px;
+   padding-top: 0px;
+}
+
+table.answersheet {
+   text-align: center;
+   border-spacing: 0;
+   border-collapse: collapse;
+}
+
+td.answersheet {
+   text-align: center;
+   text-bottom: middle;
+   padding: 1px;
+   color: #6a6566;
+   width: 300px;
+}
+
+td.answersheet_right {
+   text-align: right;
+   text-bottom: middle;
+   padding: 1px;
+   color: #6a6566;
+   max-width: 10ch;
+}
+
+td.answersheet_left {
+   text-align: left;
+   text-bottom: middle;
+   padding: 1px;
+   color: #6a6566;
+   max-width: 10ch;
+}
+
+td.borders {
+   text-align: center;
+   text-bottom: middle;
+   padding: 1px;
+   color: #6a6566;
+   width: 20%;
+
+}
+
+td.scores_round {
+   text-align: center;
+   text-bottom: middle;
+   padding: 1px;
+   color: #6a6566;
+   width: 10%;
+}
+
+td.scores_other {
+   text-align: center;
+   text-bottom: middle;
+   padding: 1px;
+   color: #6a6566;
+}
+
+td.scores_answer {
+   text-align: center;
+   text-bottom: middle;
+   padding: 1px;
+   color: #6a6566;
+   width: 30%;
+}
+
+td.rank {
+   text-align: center;
+   text-bottom: middle;
+   padding: 1px;
+   color: #6a6566;
+}
+
+td.rank_right {
+   text-align: right;
+   text-bottom: middle;
+   padding: 1px;
+   color: #6a6566;
+}
+
+td.rank_left {
+   text-align: left;
+   text-bottom: middle;
+   padding: 1px;
+   color: #6a6566;
+}
+
+td.header {
+   text-align: center;
+   text-bottom: middle;
+   padding: 1px;
+   color: #6a6566;
+   font-size: 26px;
+}
+
+
+#scores1 {
+   background-color: #083d60;
+}
+
+#scores2 {
+   background-color: #093f62;
+}
+
+#scores_header {
+   background-color: #1a445f;
+}
+
+a.rank {
+   text-decoration: none;
+}
+
+a.wtf {
+   font-size: 1px;
+   padding: 1px;
+   color: white;
+}
+
+a.refresh {
+   background-color: #1079bf;
+   padding: 10px 20px;
+   text-decoration: none;
+   display: inline-block;
+   cursor: pointer;
+   text-decoration: none;
+   color: white;
+}
+
+a.refresh:active {
+   background-color: #093f62;
+}
+
+input[type=text] {
+   width: 300px;
+}
+
+#san-button {
+   padding: 10px 20px;
+   background: #1079bf;
+   border: 0;
+   color: #FFF;
+   display: inline-block;
+   cursor: pointer;
+}
+
+#san-button:disabled {
+   padding: 10px 20px;
+   background: #73a6c8;
+   border: 0;
+   color: #FFF;
+   display: inline-block;
+   cursor: no-drop;
+}
+
+#san-button:focus {
+   padding: 10px 20px;
+   background: #093f62;
+   border: 0;
+   color: #eee;
+   display: inline-block;
+   cursor: default;
+}
+
+#fadeout {
+   opacity: 1;
+   transition: 1s opacity;
+   text-align: center;
+}
+.alert {
+   color: green;
+}
