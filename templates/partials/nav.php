@@ -12,7 +12,8 @@
                 </a>
             </li>
             <li><a href="https://draftpass.club/contact" class="">Contact</a></li>
-            <li><a href="https://draftpass.club/sponsorship" class="">Sponsorship</a></li>
+            <li><a href="https://draftpass.club/blog" class="">Blog</a></li>
+            <li><a href="https://draftpass.club/play/twitch.php" class="">Play</a></li>
             <li><a class="nav-link " href="https://draftpass.club/user/profile">Login/Register</a></li>
         </ul>
     </div>
