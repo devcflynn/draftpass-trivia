@@ -20,7 +20,7 @@ if (isset($_POST["currentround"])) {
 		$_POST["currentround"]=mysqli_real_escape_string($con, $_POST["currentround"]);
 		if ($points["idnum"] == null)  {
 			$points = $database->insert("points", [
-				"teamname" => $data["teamname"]
+				"teamname" => $teamname
 			]);
 		}
 		for($i=1; $i<=15;$i++) {
