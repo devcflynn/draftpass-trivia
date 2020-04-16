@@ -1,3 +1,5 @@
+<h4>Programs: Whaddayaknow Colorado?, every Thursday at 8 pm MST/ 9 pm CST</h4>
+<hr />
 <div class="toolbar__nav">
     <ul style="display: inline;">
         <li><a href="/play/scorepage.php" class="">Score Page</a></li>
