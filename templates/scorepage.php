@@ -5,6 +5,11 @@
 echo isset($_COOKIE["teamname"]) ? '<a href=# class=wtf>'.$_COOKIE['teamname'].' $teamname</a>
 <div align=center><table align=center width=98% class=answersheet>' : ''; 
 
+if (! isset($points["idnum"]))  {
+	$points = $database->insert("points", [
+		"teamname" => $teamname
+	]);
+}
 
 //Submit answers
 if (isset($_POST["currentround"])) {
@@ -18,11 +23,7 @@ if (isset($_POST["currentround"])) {
 	} elseif ($_POST["currentround"] == 'currentevents' && $round["currentevents"] != 1) { print "$sorry";
 	} else {
 		$_POST["currentround"]=mysqli_real_escape_string($con, $_POST["currentround"]);
-		if (! isset($points["idnum"]))  {
-			$points = $database->insert("points", [
-				"teamname" => $teamname
-			]);
-		}
+	
 		for($i=1; $i<=15;$i++) {
 			$a='a'.$i;
 			$w='w'.$i;
