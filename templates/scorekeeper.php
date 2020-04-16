@@ -1,5 +1,5 @@
-<?php 
-<?php $this->layout('template', ['title' => 'Score Page']); ?>
+<?php $this->layout('template', ['title' => 'Score Page']); 
+
 if (isset($_GET["answer"])) {
 	if ($_GET["answer"] == 1 || $_GET["answer"] == 2) {
 		//For manually answered questions
