@@ -18,7 +18,7 @@ if (isset($_POST["currentround"])) {
 	} elseif ($_POST["currentround"] == 'currentevents' && $round["currentevents"] != 1) { print "$sorry";
 	} else {
 		$_POST["currentround"]=mysqli_real_escape_string($con, $_POST["currentround"]);
-		if ($points["idnum"] == null)  {
+		if (! isset($points["idnum"]))  {
 			$points = $database->insert("points", [
 				"teamname" => $teamname
 			]);
