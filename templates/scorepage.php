@@ -118,7 +118,7 @@ if (isset($_GET["dispute"])) {
 }
 
 //Answersheet main section
-if (empty($points["idnum"])) {  
+if (empty($points["idnum"]) && isset($teamname) && $teamname !== null) {  
 	$points = $database->select('points', ['idnum', 'teamname', 'total', 'dispute'], ['teamname' => $teamname]);
 }
 if(isset($instructions)) {
