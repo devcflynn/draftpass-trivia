@@ -48,10 +48,9 @@ if(isset($_POST['teamname'])) {
 	// 	$teamname=null; 
 	// }
 	if (isset($_COOKIE["teamname"])) { 
-		$teamname=$_COOKIE["teamname"]; } 
-		else { 
-			$teamname = $_POST["teamname"]; 
-		}
+		$teamname=$_COOKIE["teamname"]; 
+	} else { 
+		$teamname = $_POST["teamname"]; 
 	}
 
 	$points = $database->select('points', ["idnum", "teamname", "total", "dispute"], [
