@@ -40,12 +40,18 @@ if(isset($_POST['teamname'])) {
 	}
 } else {
 	//set teamname, select teams point total in points
-	if (isset($_COOKIE["teamname"])) {
-		$teamname = substr($_COOKIE["teamname"],0,25);
-	}elseif (isset($_COOKIE["teamname"]) && $_COOKIE["teamname"] == null && isset($_POST["teamname"])) {
-		$teamname=substr($_POST["teamname"],0,25);
-	} else { 
-		$teamname=null; 
+	// if (isset($_COOKIE["teamname"])) {
+	// 	$teamname = substr($_COOKIE["teamname"],0,25);
+	// }elseif (isset($_COOKIE["teamname"]) && $_COOKIE["teamname"] == null && isset($_POST["teamname"])) {
+	// 	$teamname=substr($_POST["teamname"],0,25);
+	// } else { 
+	// 	$teamname=null; 
+	// }
+	if (isset($_COOKIE["teamname"])) { 
+		$teamname=$_COOKIE["teamname"]; } 
+		else { 
+			$teamname = $_POST["teamname"]; 
+		}
 	}
 
 	$points = $database->select('points', ["idnum", "teamname", "total", "dispute"], [
