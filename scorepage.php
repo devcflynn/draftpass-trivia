@@ -62,6 +62,7 @@ echo $templates->render('scorepage', compact(
 	'database',
 	'round',
 	'teamname',
-	'answerround'
+	'answerround',
+	'points'
 ));
 ?>
