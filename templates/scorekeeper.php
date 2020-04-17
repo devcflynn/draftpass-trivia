@@ -414,19 +414,33 @@ if (isset($_GET["dispute"])) {
 
 if (isset($_GET["update"])) {
 	$teampoints = $database->select('points',
-		['*'],
+		'*',
 		['idnum' => $_GET["update"]] 
 	);
 	if ($_GET["round"] == 'all') {
-		echo '<form method=post action=scorekeeper.php><input type=hidden value='.$_GET["update"].' name=teamid>
-		<tr><td class=rank colspan=4 id=scores_header><b>'.$teampoints["teamname"].'</b></td></tr>
-		<tr><td class=rank_right id=scores1 colspan=2>First Half:</td><td class=rank_left  id=scores1 colspan=2><input type=text name=r1 value='.$teampoints["firsthalf"].'></td></tr>
-		<tr><td class=rank_right id=scores2 colspan=2>Picture Round:</td><td class=rank_left  id=scores2 colspan=2><input type=text name=r2 value='.$teampoints["picture"].'></td></tr>
-		<tr><td class=rank_right id=scores1 colspan=2>Second Half:</td><td class=rank_left  id=scores1 colspan=2><input type=text name=r3 value='.$teampoints["secondhalf"].'></td></tr>
-		<tr><td class=rank_right id=scores2 colspan=2>ID Round:</td><td class=rank_left  id=scores2 colspan=2><input type=text name=r4 value='.$teampoints["id"].'></td></tr>
-		<tr><td class=rank_right id=scores1 colspan=2>Social Bonus:</td><td class=rank_left  id=scores1 colspan=2><input type=text name=r5 value='.$teampoints["currentevents"].'></td></tr>
-		<tr><td class=rank_right id=scores2 colspan=2>Final Questions:</td><td class=rank_left  id=scores2 colspan=2><input type=text name=r6 value='.$teampoints["wager"].'></td></tr>
-		<tr><td class=rank colspan=4 id><input type=submit value=Submit name=btn-submit id=san-button></form></td></tr>';
+		echo '<form method=post action=scorekeeper.php><input type=hidden value='.$_GET["update"].' name=teamid>';
+
+		if(isset($teampoints, $teampoints["teamname"])) {
+			echo '<tr><td class=rank colspan=4 id=scores_header><b>'.$teampoints["teamname"].'</b></td></tr>';
+		}
+		if(isset($teampoints, $teampoints["firsthalf"])) {
+			echo '<tr><td class=rank_right id=scores1 colspan=2>First Half:</td><td class=rank_left  id=scores1 colspan=2><input type=text name=r1 value='.$teampoints["firsthalf"].'></td></tr>';
+		}
+		if(isset($teampoints, $teampoints["picture"])) {
+			echo '<tr><td class=rank_right id=scores2 colspan=2>Picture Round:</td><td class=rank_left  id=scores2 colspan=2><input type=text name=r2 value='.$teampoints["picture"].'></td></tr>';
+		}
+		if(isset($teampoints, $teampoints["secondhalf"])) {
+			echo '<tr><td class=rank_right id=scores1 colspan=2>Second Half:</td><td class=rank_left  id=scores1 colspan=2><input type=text name=r3 value='.$teampoints["secondhalf"].'></td></tr>';
+		}
+		if(isset($teampoints, $teampoints["id"])) {
+			echo '<tr><td class=rank_right id=scores2 colspan=2>ID Round:</td><td class=rank_left  id=scores2 colspan=2><input type=text name=r4 value='.$teampoints["id"].'></td></tr>';
+		}
+		if(isset($teampoints, $teampoints["currentevents"])) {
+			echo '<tr><td class=rank_right id=scores1 colspan=2>Social Bonus:</td><td class=rank_left  id=scores1 colspan=2><input type=text name=r5 value='.$teampoints["currentevents"].'></td></tr>';
+		}
+		if(isset($teampoints, $teampoints["wager"])) {
+			echo '<tr><td class=rank_right id=scores2 colspan=2>Final Questions:</td><td class=rank_left  id=scores2 colspan=2><input type=text name=r6 value='.$teampoints["wager"].'></td></tr>';
+		}
 	} else {
 		echo '<tr><td colspan=4 id=scores_header><b>Team: '.$teampoints["teamname"].'</b><br><br></td></tr>
 		<tr><td class=rank_header id=scores_header>Round</td>
@@ -440,6 +454,7 @@ if (isset($_GET["update"])) {
 	} else {
 		//$fromwhere="and round ='".$_GET["round"]."' and checked='1'";
 		$cround=$_GET["round"];
+		$currentround = 'answers_r1';
 		if ($cround == 'firsthalf') { $currentround='answers_r1'; }
 		if ($cround == 'picture') { $currentround='answers_r2'; }
 		if ($cround == 'secondhalf') { $currentround='answers_r3'; }
@@ -451,6 +466,7 @@ if (isset($_GET["update"])) {
 		['idnum','teamname', $cround, 'total'],
 		['idnum' => $_GET["update"]] 
 	);
+
 	$teams = $database->select($currentround,
 		['idnum', 'teamid', 'round', 'question', 'answer', 'correct', 'wager'],
 		["ORDER" => ["round" => "ASC"]],
@@ -474,7 +490,7 @@ if (isset($_GET["update"])) {
 		<td class=rank id=scores$alternate>'.$uncodedanswer.$wager.'</td>
 		<td class=rank id=scores$alternate><a href=scorekeeper.php?dispute='.$allteams["idnum"].'&update='.$allteams["teamid"].'&round='.$allteams["round"].'&currentround='.$currentround.'>'.$option.'</a></td></tr>';
 	}
-	if ($alternate == 1) { $alternate=2; } else { $alternate=1; }
+	if (isset($alternate) && $alternate == 1) { $alternate=2; } else { $alternate=1; }
 	if ($_GET["round"] == 'all') { $showwhatpoints=$teampoints["total"]; } else { $showwhatpoints=$teampoints["$cround"]; }
 	echo '<td class=rank id=scores'.$alternate.' colspan=4>'.$_GET["round"].' points: '.$showwhatpoints.'</td></tr>';
 }

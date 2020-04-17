@@ -1,8 +1,16 @@
-<?php $this->layout('template', ['title' => 'Score Page']); ?>
+<?php $this->layout('template', ['title' => 'Score Page']); 
+//Leave Team
+if (isset($_GET["leave"])) {
+	if ($_POST["teamname"] == null) {
+		setcookie("teamname", null, time() - 3600, '/');
+	}
+}
+
+?>
 <form method=post action=scorepage.php>
 <?php  
 
-echo isset($teamname) ? '<a href=# class=wtf>'.$teamname.' $</a>
+echo isset($teamname) && strlen($teamname) > 0 ? '<a href=# class=wtf>'.$teamname.' $</a>
 <div align=center><table align=center width=98% class=answersheet>' : ''; 
 
 if (! isset($points["idnum"]))  {
@@ -118,9 +126,10 @@ if (isset($_GET["dispute"])) {
 }
 
 //Answersheet main section
-if (empty($points["idnum"]) && isset($teamname) && $teamname !== null) {  
-	$points = $database->fetch('points', ['idnum', 'teamname', 'total', 'dispute'], ['teamname' => $teamname]);
+if ((isset($points) && ! is_array($points) && $points->rowCount() > 0) && isset($teamname) && $teamname !== null) {  
+	$points = $database->get('points', ['idnum', 'teamname', 'total', 'dispute'], ['teamname' => $teamname]);
 }
+
 if(isset($instructions)) {
 	print "<tr><td class=borders></td><td class=answersheet colspan=4>$instructions<br></td><td class=borders></td></tr>";
 }
@@ -414,7 +423,7 @@ if ($teamname == null) {
 	<a href=scorepage.php id=refresh class=refresh>Refresh</a> <input type=submit value='Submit' name='btn-submit' id='san-button'><br></td><td class=borders></td>";
 }
 
-$hostsset= $database->count('hosts');
+$hostsset= $database->count('hosts', ['*']);
 
 if ($hostsset > 0) {
 	print "<tr><td class=borders></td><td colspan=4><p id='fadeout'>Your hosts for tonight are: ";
