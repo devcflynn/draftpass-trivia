@@ -1,22 +1,23 @@
 <?php $this->layout('template', ['title' => 'Score Page']); 
 //Leave Team
 if (isset($_GET["leave"])) {
-	if ($_POST["teamname"] == null) {
-		setcookie("teamname", null, time() - 3600, '/');
-	}
+	setcookie("teamname", null, time() - 3600, '/');
 }
 
 ?>
 <form method=post action=scorepage.php>
+<div align="center">
+<a href=# class=wtf><?php (isset($teamname) && strlen($teamname) > 0) ? $teamname : ''; ?></a>
+<table align="center" width="98%" class="answersheet">
 <?php  
 
-echo isset($teamname) && strlen($teamname) > 0 ? '<a href=# class=wtf>'.$teamname.' $</a>
-<div align=center><table align=center width=98% class=answersheet>' : ''; 
 
 if (! isset($points["idnum"]))  {
-	$points = $database->insert("points", [
+	$database->insert("points", [
 		"teamname" => $teamname
 	]);
+	$points = $database->get("points", '*', ['teamname' => $teamname]);
+
 }
 
 //Submit answers
@@ -30,18 +31,17 @@ if (isset($_POST["currentround"])) {
 	} elseif ($_POST["currentround"] == 'id' && $round["id"] != 1) { print "$sorry";
 	} elseif ($_POST["currentround"] == 'currentevents' && $round["currentevents"] != 1) { print "$sorry";
 	} else {
-		$_POST["currentround"]=mysqli_real_escape_string($con, $_POST["currentround"]);
-	
+		
 		for($i=1; $i<=15;$i++) {
 			$a='a'.$i;
 			$w='w'.$i;
 			$q='q'.$i.'q';
-			if ($_POST[$a]) {
+			if (isset($_POST[$a])) {
 				$entry = array(" THE ", "THE ", " IN ", " OF ", " TOO ", " TO ", " IS ", " AND ", " AN ", " A ", " MY ");
 				$nohtml = array("<",">",'"');
 				$unique=str_replace ($nohtml, '', $_POST[$a]);
 				$unique=$points["idnum"].$q.$unique; //used to make answer a unique scorepage
-				$uploadanswer=mysqli_real_escape_string($con, $unique);
+				$uploadanswer= $unique;
 				$special=preg_replace ("/[^a-zA-Z0-9\s]/", '', $_POST[$a]);
 				$special2=strtoupper($special);
 				$special2 = str_replace($entry, " ", $special2);
@@ -51,7 +51,7 @@ if (isset($_POST["currentround"])) {
 					['answer', 'shortcut'],
 					['question' => $i, 'round' => $_POST["currentround"]]
 				);
-				$answerkeyupper=strtoupper($answerkey["answer"]);
+				$answerkeyupper= isset($answerkey["answer"]) ? strtoupper($answerkey["answer"]) : '';
 				$answerkeyupper=str_replace($entry, " ", $answerkeyupper);
 				$answerkeyupper = str_replace(" ", "", $answerkeyupper);
 				$a_answerkeyupper = str_split($answerkeyupper);
@@ -59,10 +59,10 @@ if (isset($_POST["currentround"])) {
 				sort($a_answerkeyupper);
 				$special2=implode('',$a_special2);
 				$answerkeyupper=implode('',$a_answerkeyupper);
-				if ($answerkey["shortcut"] == 0) {
+				if (isset($answerkey["shortcut"]) && $answerkey["shortcut"] == 0) {
 					if ($special2 == $answerkeyupper && !empty($answerkeyupper)) { $checked=2; } else { $checked=0; }
 				} else {
-					if(strpos($special2, $answerkeyupper) !== false && !empty($answerkeyupper)) { $checked=2; } else { $checked=0; }
+					if(isset($answerkeyupper) && strlen( $answerkeyupper) > 0 && strpos($special2, $answerkeyupper) !== false && !empty($answerkeyupper)) { $checked=2; } else { $checked=0; }
 				}
 
 				$database->delete($answerround, [
@@ -72,15 +72,18 @@ if (isset($_POST["currentround"])) {
 					'answer' => $unique
 				]);
 
-				$database->insert( $answerround , [
-					'teamid' => $points["idnum"],
-					'round' => $_POST["currentround"],
-					'question' => $i,
-					'answer' => $uploadanswer,
-					'wager' => $_POST[$w],
-					'checked' => $checked
-
-				]);
+				if(isset($_POST[$w])) {
+					$database->insert( $answerround , [
+						'teamid' => $points["idnum"],
+						'round' => $_POST["currentround"],
+						'question' => $i,
+						'answer' => $uploadanswer,
+						'wager' => $_POST[$w],
+						'checked' => $checked
+	
+					]);
+				}
+				
 			}
 		}
 	}
