@@ -53,7 +53,7 @@ if(isset($_POST['teamname'])) {
 		$teamname = $_POST["teamname"]; 
 	}
 
-	$points = $database->select('points', ["idnum", "teamname", "total", "dispute"], [
+	$points = $database->get('points', ["idnum", "teamname", "total", "dispute"], [
 		'teamname' => $teamname
 	]);
 

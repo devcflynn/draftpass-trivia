@@ -2,7 +2,7 @@
 <form method=post action=scorepage.php>
 <?php  
 
-echo isset($_COOKIE["teamname"]) ? '<a href=# class=wtf>'.$_COOKIE['teamname'].' $teamname</a>
+echo isset($teamname) ? '<a href=# class=wtf>'.$teamname.' $</a>
 <div align=center><table align=center width=98% class=answersheet>' : ''; 
 
 if (! isset($points["idnum"]))  {
@@ -119,7 +119,7 @@ if (isset($_GET["dispute"])) {
 
 //Answersheet main section
 if (empty($points["idnum"]) && isset($teamname) && $teamname !== null) {  
-	$points = $database->select('points', ['idnum', 'teamname', 'total', 'dispute'], ['teamname' => $teamname]);
+	$points = $database->fetch('points', ['idnum', 'teamname', 'total', 'dispute'], ['teamname' => $teamname]);
 }
 if(isset($instructions)) {
 	print "<tr><td class=borders></td><td class=answersheet colspan=4>$instructions<br></td><td class=borders></td></tr>";
@@ -147,12 +147,14 @@ if ($prevround > 0) {
 }
 print "</td></tr>";
 if(isset($points["idnum"])) {
+	
 	if ($round["firsthalf"] == 1) {
 		print "<input type='hidden' value='firsthalf' name='currentround'>";
 		$total=6;
 		for($i=1; $i<=$total;$i++) {
 			$a='a'.$i;
 			$w='w'.$i;
+			$disabled = [$i];
 			
 			$answer = $database->get('firsthalf',
 				['answer', 'wager', 'checked'],
@@ -163,19 +165,28 @@ if(isset($points["idnum"])) {
 			$q2=substr('$uncodedanswer', 2, 1);
 			if (is_numeric($q2)) { $q=$points["idnum"].$q.$q2; } else { $q=$points["idnum"].$q; }
 			$uncodedanswer=str_replace($q,'',$answer["answer"]);
-			if ($answer["checked"] == 1) { $uncodedanswer='Answer Checked: '.$uncodedanswer; $disabled[$i]='disabled'; }
+			if ($answer["checked"] == 1) { 
+				$uncodedanswer='Answer Checked: '.$uncodedanswer; 
+				
+			}
+			$disabled[$i] = 'disabled'; 
 			$wager=$answer['wager'];
 			$selected[$wager] ='selected';
-			print "<tr><td class=borders></td><td class=answersheet_right>#$i Answer: </td><td class=answersheet><input type=text name=a$i value=\"$uncodedanswer\" $disabled[$i]></td>
+			?>
+			
+			<tr>
+				<td class=borders></td><td class=answersheet_right>#<?php echo $i; ?> Answer: </td>
+				<td class=answersheet><input type=text name=a<?php echo $i; ?> value="<?php echo $uncodedanswer; ?>"></td>
 			<td class=answersheet_left colspan=2>Wager: 
-			<select name='w$i'>
-				<option $selected[1] value='1' $disabled[$i]>1</option>
-				<option $selected[2] value='2' $disabled[$i]>2</option>
-				<option $selected[3] value='3' $disabled[$i]>3</option>
-				<option $selected[4] value='4' $disabled[$i]>4</option>
-				<option $selected[5] value='5' $disabled[$i]>5</option>
-				<option $selected[6] value='6' $disabled[$i]>6</option>
-			</select></td><td class=borders></td></tr>";
+			<select name='w<?php echo $i; ?>'>
+				<option <?php echo isset($selected[1]) ? $selected[1] : ''; ?> value='1' <?php echo isset($disabled[$i]) ? $disabled[$i] : ''; ?>>1</option>
+				<option <?php echo isset($selected[2]) ? $selected[2] : ''; ?> value='2' <?php echo isset($disabled[$i]) ? $disabled[$i] : ''; ?>>2</option>
+				<option <?php echo isset($selected[3]) ? $selected[3] : ''; ?> value='3' <?php echo isset($disabled[$i]) ? $disabled[$i] : ''; ?>>3</option>
+				<option <?php echo isset($selected[4]) ? $selected[4] : ''; ?> value='4' <?php echo isset($disabled[$i]) ? $disabled[$i] : ''; ?>>4</option>
+				<option <?php echo isset($selected[5]) ? $selected[5] : ''; ?> value='5' <?php echo isset($disabled[$i]) ? $disabled[$i] : ''; ?>>5</option>
+				<option <?php echo isset($selected[6]) ? $selected[6] : ''; ?> value='6' <?php echo isset($disabled[$i]) ? $disabled[$i] : ''; ?>>6</option>
+			</select></td><td class=borders></td></tr>
+			<?php
 			$selected[$wager] = '';
 		}
 	}
